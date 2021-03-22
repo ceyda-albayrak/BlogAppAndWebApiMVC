@@ -1,0 +1,15 @@
+﻿
+@model IEnumerable<BlogMvcApp.Models.Category>
+
+
+<div class="col-4">
+    <div class="list-group">
+        <div class="list-group-item list-group-item-primary">Kategori Listesi</div>
+
+        @foreach (var item in Model)
+        {
+            <a href="/Blogs/List/@item.CategoryID" class="list-group-item list-group-item">@item.CategoryName</a>
+        }
+    </div>
+</div>
+

@@ -1,0 +1,119 @@
+﻿
+@model IEnumerable<BlogMvcApp.Models.Blog>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("+Create New", "Create", null, new { @class = "btn btn-success" })
+</p>
+
+@if (TempData["Blog"] != null)
+{
+    var blog = (BlogMvcApp.Models.Blog)TempData["Blog"];
+    <div class=" alert alert-success"><strong>@blog.Title Güncellendi.</strong></div>
+}
+
+@if (Model.Count() == 0)
+{
+    <div class="alert alert-danger">
+        <h3>Kayıt Bulunamadı.</h3>
+    </div>
+}
+else
+{
+
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Contentt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateofAdded)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Confirmation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Home)
+        </th>
+        <th>
+            Transactions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contentt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateofAdded)
+            </td>
+            <td>
+                @if (item.Confirmation == true)
+                {
+                    <label class="alert-success">Onaylanmış</label>
+                }
+                else if (item.Confirmation == null)
+                {
+                    <label class="alert-warning">Bakılmamış</label>
+                }
+                else
+                {
+                    <label class="alert-danger">Onaylanmamış</label>
+                }
+            </td>
+            <td>
+                @if (item.Home == true)
+                {
+                    <label class="alert-success">Onaylanmış</label>
+                }
+                else if (item.Home == null)
+                {
+                    <label class="alert-warning">Bakılmamış</label>
+                }
+                else
+                {
+                    <label class="alert-danger">Onaylanmamış</label>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.BlogID }, new { @class = "btn btn-warning" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.BlogID }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.BlogID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+}
+
+<div class="list">
+    @Html.Partial("Search")
+    @{Html.RenderAction("CategoryList", "Categories");}
+
+</div>
